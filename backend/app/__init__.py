@@ -1,0 +1,2 @@
+# EducAIKids Backend Application
+
