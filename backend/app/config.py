@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     # Modèles Replicate
     replicate_image_model: str = "black-forest-labs/flux-schnell"
     replicate_tts_model: str = "minimax/speech-02-turbo"  # Options: minimax/speech-02-turbo, kokoro, parler, styletts2, bark
-    replicate_music_model: str = "facebook/musicgen"
+    replicate_music_model: str = "meta/musicgen"
     replicate_video_model: str = "wan-video/wan-2.2-i2v-fast"  # Image-to-Video animation
     
     # Redis (pour Celery)

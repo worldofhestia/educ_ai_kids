@@ -96,24 +96,25 @@ class MusicGenerator:
                     attempt=attempt + 1
                 )
                 
-                # Appel Replicate async avec paramètres optimisés
-                output = await asyncio.to_thread(
-                    replicate.run,
-                    self.settings.replicate_music_model,
-                    input={
-                        "prompt": prompt,
-                        "model_version": "stereo-large",  # Meilleure qualité stéréo
-                        "output_format": "wav",           # WAV pour MoviePy
-                        "duration": int(generation_duration),
-                        "top_k": 250,                     # Diversité du sampling
-                        "top_p": 0,                       # Désactivé (utilise top_k)
-                        "temperature": 1,                 # Créativité standard
-                        "continuation": False,
-                        "continuation_start": 0,
-                        "multi_band_diffusion": False,
-                        "normalization_strategy": "peak", # Normalisation peak
-                        "classifier_free_guidance": 3,    # Adhérence au prompt
-                    }
+                # Appel Replicate async avec timeout de 5 minutes
+                output = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        replicate.run,
+                        self.settings.replicate_music_model,
+                        input={
+                            "prompt": prompt,
+                            "model_version": "stereo-large",
+                            "output_format": "wav",
+                            "duration": int(generation_duration),
+                            "top_k": 250,
+                            "top_p": 0,
+                            "temperature": 1,
+                            "continuation": False,
+                            "normalization_strategy": "peak",
+                            "classifier_free_guidance": 3,
+                        }
+                    ),
+                    timeout=300.0
                 )
                 
                 if not output:
@@ -137,8 +138,12 @@ class MusicGenerator:
                 
                 return str(music_filename)
                 
+            except asyncio.TimeoutError:
+                logger.error("music_generation_timeout", attempt=attempt + 1)
+                return None
             except ReplicateError as e:
-                if "429" in str(e) or "throttled" in str(e).lower():
+                error_str = str(e)
+                if "429" in error_str or "throttled" in error_str.lower():
                     wait_time = self.RETRY_DELAY_BASE * (attempt + 1)
                     logger.warning(
                         "music_rate_limited_retrying",
@@ -146,8 +151,15 @@ class MusicGenerator:
                         wait_seconds=wait_time
                     )
                     await asyncio.sleep(wait_time)
+                elif "404" in error_str or "not found" in error_str.lower():
+                    logger.error(
+                        "music_model_not_found",
+                        model=self.settings.replicate_music_model,
+                        error=error_str
+                    )
+                    return None
                 else:
-                    logger.error("music_generation_failed", error=str(e))
+                    logger.error("music_generation_failed", error=error_str)
                     return None
             except Exception as e:
                 logger.error("music_generation_failed", error=str(e))
