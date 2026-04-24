@@ -35,8 +35,8 @@ export function useVideoGeneration(): UseVideoGenerationReturn {
   const pollingRef = useRef<NodeJS.Timeout | null>(null);
   const isMountedRef = useRef(true);
   const pollRetriesRef = useRef(0);
+  const pollStatusRef = useRef<(id: string) => Promise<void>>(async () => {});
 
-  // Nettoyage au démontage
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -47,7 +47,6 @@ export function useVideoGeneration(): UseVideoGenerationReturn {
     };
   }, []);
 
-  // Fonction de polling du statut avec retry automatique
   const pollStatus = useCallback(async (id: string) => {
     if (!isMountedRef.current) return;
 
@@ -56,7 +55,6 @@ export function useVideoGeneration(): UseVideoGenerationReturn {
 
       if (!isMountedRef.current) return;
 
-      // Reset le compteur de retries après un succès
       pollRetriesRef.current = 0;
 
       setStatus(response.status);
@@ -69,9 +67,8 @@ export function useVideoGeneration(): UseVideoGenerationReturn {
         setVideoUrl(api.getVideoUrl(id));
       }
 
-      // Continuer le polling si pas terminé
       if (response.status !== 'completed' && response.status !== 'failed') {
-        pollingRef.current = setTimeout(() => pollStatus(id), POLLING_INTERVAL);
+        pollingRef.current = setTimeout(() => pollStatusRef.current(id), POLLING_INTERVAL);
       } else {
         setIsLoading(false);
         if (response.status === 'completed' && response.video_url) {
@@ -85,12 +82,12 @@ export function useVideoGeneration(): UseVideoGenerationReturn {
       pollRetriesRef.current += 1;
 
       if (pollRetriesRef.current < MAX_POLL_RETRIES) {
-        // Retry avec backoff exponentiel (2s, 4s, 8s)
         const backoff = POLLING_INTERVAL * Math.pow(2, pollRetriesRef.current);
-        console.warn(`Polling retry ${pollRetriesRef.current}/${MAX_POLL_RETRIES} dans ${backoff}ms`);
-        pollingRef.current = setTimeout(() => pollStatus(id), backoff);
+        console.warn(
+          `Polling retry ${pollRetriesRef.current}/${MAX_POLL_RETRIES} dans ${backoff}ms`
+        );
+        pollingRef.current = setTimeout(() => pollStatusRef.current(id), backoff);
       } else {
-        // Abandonner après MAX_POLL_RETRIES échecs consécutifs
         setErrorMessage(
           error instanceof Error ? error.message : 'Erreur de connexion au serveur'
         );
@@ -99,6 +96,10 @@ export function useVideoGeneration(): UseVideoGenerationReturn {
       }
     }
   }, []);
+
+  useEffect(() => {
+    pollStatusRef.current = pollStatus;
+  }, [pollStatus]);
 
   // Démarrer la génération
   const startGeneration = useCallback(

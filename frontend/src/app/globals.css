@@ -3,224 +3,275 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* =========================================================================
+   🌿 EducAIKids — Design System "Hestia / Tactile Sanctuary"
+   Palette terracotta + sauge + crème  •  Lexend + Public Sans
+   ========================================================================= */
 @theme inline {
+  /* --- Shadcn tokens (mappés sur les variables CSS) --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* --- Tokens Hestia dédiés --- */
+  --color-hestia-brand: #c77b6d;       /* Terracotta signature */
+  --color-hestia-brand-hover: #b56a5c;
+  --color-hestia-sage: #7d9a8f;        /* Vert sauge accent */
+  --color-hestia-sage-dark: #48645a;
+  --color-hestia-gold: #765710;        /* Doré sobre */
+  --color-hestia-gold-soft: #ffdea5;
+  --color-hestia-gold-on: #271900;
+  --color-hestia-cream: #f5f0e5;
+  --color-hestia-neutral: #aba8a5;
+
+  /* Surfaces (stacked paper layering) */
+  --color-surface: #fdf9f5;
+  --color-surface-variant: #e6e2de;
+  --color-surface-container: #f1edea;
+  --color-surface-container-low: #f7f3ef;
+  --color-surface-container-high: #ebe7e4;
+  --color-surface-container-highest: #e6e2de;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-surface: #1c1b1a;
+  --color-on-surface-variant: #534340;
+  --color-outline: #86736f;
+  --color-outline-variant: #d8c1bd;
+  --color-primary-container: #a86154;
+
+  /* Typographie */
+  --font-headline: var(--font-lexend), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radius (Hestia = 8 + xl/2xl/3xl pour les cartes organiques) */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-3xl: 2rem;
+  --radius-4xl: 3rem;
 }
 
-/* 🎨 EducAIKids - Thème coloré et enfantin */
+/* =========================================================================
+   🎨 Variables CSS — Mode clair (par défaut)
+   ========================================================================= */
 :root {
-  --radius: 0.75rem;
-  
-  /* Couleurs principales - Thème lumineux et joyeux */
-  --background: oklch(0.98 0.01 270);
-  --foreground: oklch(0.2 0.02 270);
-  
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 270);
-  
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 270);
-  
-  /* Primary - Bleu éducatif vibrant */
-  --primary: oklch(0.55 0.22 260);
-  --primary-foreground: oklch(0.98 0 0);
-  
-  /* Secondary - Violet doux */
-  --secondary: oklch(0.94 0.03 300);
-  --secondary-foreground: oklch(0.3 0.05 300);
-  
-  --muted: oklch(0.95 0.01 270);
-  --muted-foreground: oklch(0.5 0.02 270);
-  
-  /* Accent - Orange ludique */
-  --accent: oklch(0.92 0.05 60);
-  --accent-foreground: oklch(0.25 0.1 60);
-  
-  --destructive: oklch(0.6 0.24 25);
-  
-  --border: oklch(0.9 0.02 270);
-  --input: oklch(0.92 0.01 270);
-  --ring: oklch(0.55 0.22 260);
-  
-  /* Charts - Palette arc-en-ciel enfantine */
-  --chart-1: oklch(0.65 0.25 260); /* Bleu */
-  --chart-2: oklch(0.7 0.2 160);   /* Vert */
-  --chart-3: oklch(0.8 0.2 90);    /* Jaune */
-  --chart-4: oklch(0.7 0.22 30);   /* Orange */
-  --chart-5: oklch(0.65 0.25 320); /* Rose */
-  
-  --sidebar: oklch(0.97 0.02 260);
-  --sidebar-foreground: oklch(0.2 0.02 270);
-  --sidebar-primary: oklch(0.55 0.22 260);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.92 0.05 60);
-  --sidebar-accent-foreground: oklch(0.25 0.1 60);
-  --sidebar-border: oklch(0.9 0.02 270);
-  --sidebar-ring: oklch(0.55 0.22 260);
+  --radius: 0.5rem;
+
+  --background: #fdf9f5;            /* surface */
+  --foreground: #1c1b1a;            /* on-surface */
+
+  --card: #ffffff;                  /* surface-container-lowest */
+  --card-foreground: #1c1b1a;
+
+  --popover: #ffffff;
+  --popover-foreground: #1c1b1a;
+
+  --primary: #8b4a3e;               /* terracotta profond */
+  --primary-foreground: #ffffff;
+
+  --secondary: #c8e6da;              /* secondary-container (sauge clair) */
+  --secondary-foreground: #4d685e;   /* on-secondary-container */
+
+  --muted: #f1edea;                  /* surface-container */
+  --muted-foreground: #534340;
+
+  --accent: #ffdea5;                 /* tertiary-fixed (ambre doux) */
+  --accent-foreground: #271900;
+
+  --destructive: #ba1a1a;
+
+  --border: #d8c1bd;                 /* outline-variant */
+  --input: #ebe7e4;                  /* surface-container-high */
+  --ring: #8b4a3e;
 }
 
+/* Mode sombre (gardé en veilleuse, active via classe .dark) */
 .dark {
-  --background: oklch(0.15 0.02 270);
-  --foreground: oklch(0.95 0.01 270);
-  
-  --card: oklch(0.2 0.02 270);
-  --card-foreground: oklch(0.95 0.01 270);
-  
-  --popover: oklch(0.2 0.02 270);
-  --popover-foreground: oklch(0.95 0.01 270);
-  
-  /* Primary - Bleu lumineux sur fond sombre */
-  --primary: oklch(0.7 0.2 260);
-  --primary-foreground: oklch(0.15 0.02 270);
-  
-  /* Secondary - Violet sombre */
-  --secondary: oklch(0.25 0.04 300);
-  --secondary-foreground: oklch(0.9 0.02 300);
-  
-  --muted: oklch(0.25 0.02 270);
-  --muted-foreground: oklch(0.65 0.02 270);
-  
-  --accent: oklch(0.3 0.05 60);
-  --accent-foreground: oklch(0.9 0.05 60);
-  
-  --destructive: oklch(0.65 0.22 25);
-  
-  --border: oklch(0.3 0.02 270);
-  --input: oklch(0.25 0.02 270);
-  --ring: oklch(0.7 0.2 260);
-  
-  --chart-1: oklch(0.6 0.22 260);
-  --chart-2: oklch(0.65 0.18 160);
-  --chart-3: oklch(0.75 0.18 90);
-  --chart-4: oklch(0.65 0.2 30);
-  --chart-5: oklch(0.6 0.22 320);
-  
-  --sidebar: oklch(0.18 0.02 270);
-  --sidebar-foreground: oklch(0.95 0.01 270);
-  --sidebar-primary: oklch(0.7 0.2 260);
-  --sidebar-primary-foreground: oklch(0.15 0.02 270);
-  --sidebar-accent: oklch(0.3 0.05 60);
-  --sidebar-accent-foreground: oklch(0.9 0.05 60);
-  --sidebar-border: oklch(0.3 0.02 270);
-  --sidebar-ring: oklch(0.7 0.2 260);
+  --background: #1c1b1a;
+  --foreground: #f4f0ec;
+  --card: #262320;
+  --card-foreground: #f4f0ec;
+  --popover: #262320;
+  --popover-foreground: #f4f0ec;
+  --primary: #ffb4a6;
+  --primary-foreground: #5d1a11;
+  --secondary: #2f4a40;
+  --secondary-foreground: #cbe9dd;
+  --muted: #2a2724;
+  --muted-foreground: #d8c1bd;
+  --accent: #5d4200;
+  --accent-foreground: #ffdea5;
+  --destructive: #ffb4ab;
+  --border: #3a3633;
+  --input: #2f2c29;
+  --ring: #ffb4a6;
 }
 
+/* =========================================================================
+   🧱 Base layer
+   ========================================================================= */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    font-family: var(--font-body);
+  }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headlines Hestia : Lexend, tracking serré, poids semi-bold */
+  .font-headline,
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headline);
+    letter-spacing: -0.01em;
   }
 }
 
-/* Animations personnalisées */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
+/* =========================================================================
+   ✨ Utilitaires signature Hestia
+   ========================================================================= */
+@layer utilities {
+  /* Ombres "tintées" — jamais noir pur, toujours warm */
+  .editorial-shadow {
+    box-shadow: 0 12px 24px -4px rgba(28, 27, 26, 0.05);
   }
-  50% {
-    transform: translateY(-10px);
+
+  .editorial-shadow-lg {
+    box-shadow: 0 20px 40px -8px rgba(28, 27, 26, 0.08);
+  }
+
+  .drawer-shadow {
+    box-shadow: 0 -12px 32px -4px rgba(28, 27, 26, 0.08);
+  }
+
+  /* Glassmorphism pour barres flottantes */
+  .glass-nav {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(253, 249, 245, 0.8);
+  }
+
+  .dark .glass-nav {
+    background-color: rgba(28, 27, 26, 0.7);
+  }
+
+  /* Dégradé "luminous" pour CTA principaux (mimique lumière naturelle) */
+  .bg-hestia-gradient {
+    background-image: linear-gradient(135deg, #8b4a3e 0%, #a86154 100%);
+  }
+
+  .bg-hestia-gradient-soft {
+    background-image: linear-gradient(135deg, #c77b6d 0%, #8b4a3e 100%);
+  }
+
+  /* Forme organique (pour avatars / blobs décoratifs) */
+  .organic-shape {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  /* Transition douce pour le chatbot */
+  .chat-window {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .chat-window.hidden-chat {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+  }
+
+  /* Material Symbols : réglages visuels par défaut */
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+
+  /* Sélection de texte */
+  .selection-hestia::selection,
+  .selection-hestia *::selection {
+    background: #ffdea5;
+    color: #271900;
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  animation: shimmer 2s linear infinite;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 100%;
-}
-
-/* Styles pour la barre de progression colorée */
-[data-slot="progress-indicator"] {
-  background: linear-gradient(90deg, 
-    oklch(0.55 0.22 260), 
-    oklch(0.65 0.25 320), 
-    oklch(0.7 0.22 30)
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s linear infinite;
-}
-
-/* Scrollbar stylisée */
+/* =========================================================================
+   🖱️ Scrollbar Hestia
+   ========================================================================= */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--muted);
-  border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
+  background: var(--color-outline-variant);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.45 0.22 260);
+  background: var(--color-outline);
 }
 
-/* Focus visible amélioré */
+/* Focus visible cohérent */
 *:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-/* Sélection de texte colorée */
 ::selection {
-  background: oklch(0.55 0.22 260 / 30%);
-  color: inherit;
+  background: #ffdea5;
+  color: #271900;
+}
+
+/* =========================================================================
+   🎞️ Animations
+   ========================================================================= */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 222, 165, 0.4), transparent);
+  background-size: 200% 100%;
+}
+
+/* Progress bar colorée façon Hestia */
+[data-slot="progress-indicator"] {
+  background: linear-gradient(90deg, #8b4a3e, #c77b6d, #ffdea5);
+  background-size: 200% 100%;
+  animation: shimmer 2.2s linear infinite;
 }

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interroger - World of Hestia</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#afcdc1",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#ddd9d6",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#1c1b1a",
+                        "inverse-primary": "#ffb4a6",
+                        "primary-fixed-dim": "#ffb4a6",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "on-secondary-container": "#4d685e",
+                        "tertiary-container": "#916f28",
+                        "primary-fixed": "#ffdad4",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#314c43",
+                        "tertiary-fixed-dim": "#ebc071",
+                        "primary": "#8b4a3e",
+                        "tertiary": "#765710",
+                        "surface-variant": "#e6e2de",
+                        "surface-container": "#f1edea",
+                        "outline-variant": "#d8c1bd",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#534340",
+                        "on-surface": "#1c1b1a",
+                        "on-primary-container": "#fffbff",
+                        "on-primary-fixed": "#390b05",
+                        "secondary-fixed": "#cbe9dd",
+                        "primary-container": "#a86154",
+                        "on-secondary-fixed": "#042019",
+                        "surface-container-high": "#ebe7e4",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-tint": "#8e4c40",
+                        "surface-container-highest": "#e6e2de",
+                        "surface": "#fdf9f5",
+                        "secondary": "#48645a",
+                        "inverse-on-surface": "#f4f0ec",
+                        "on-tertiary-container": "#fffbff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#31302e",
+                        "on-primary-fixed-variant": "#71352a",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fdf9f5",
+                        "secondary-container": "#c8e6da",
+                        "background": "#fdf9f5",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f7f3ef",
+                        "outline": "#86736f",
+                        "tertiary-fixed": "#ffdea5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "2rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Lexend"],
+                        "body": ["Public Sans"],
+                        "label": ["Public Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            box-shadow: 0 12px 24px -4px rgba(28, 27, 26, 0.05);
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            background-color: rgba(253, 249, 245, 0.8);
+        }
+        body {
+            background-color: #fdf9f5;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-tertiary-fixed selection:text-on-tertiary-fixed h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-[#fdf9f5]/80 backdrop-blur-md">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-headline font-semibold tracking-tighter text-[#C77B6D]">Mon Service</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#ABA8A5] font-medium hover:text-[#C77B6D] transition-colors font-headline" href="#">Découvrir</a>
+<a class="text-[#7D9A8F] font-bold border-b-2 border-[#7D9A8F] pb-1 font-headline" href="#">Utiliser</a>
+</nav>
+<div class="flex items-center gap-6">
+<div class="hidden sm:flex items-center gap-2 bg-tertiary-fixed px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="payments">payments</span>
+<span class="text-on-tertiary-fixed font-headline font-bold text-sm">250</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border-2 border-white/50">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGABvfRnOHt-23ph-QdBhhpOkUKeHunNMCq0F-I1AIkvSTJXXtl6aGlJRvDv935xFTIPOHEVsSrkmWUO4j2-pPbUtqeRyMiKgv5T-At1990fJjJvnuv6YQS_2T48cHvF4FMCoKNGcMXC42Rl9h4X4Sdiq47h_LQrTTv4YUCZ_h29IRPkJRzAVvOrzCOxSkfq2Y6-jHDooigQ7cWWizZPsOftX3uUedzW55-blIxdO56Ul7C_yRBIOIAgk448rm33r-SN3fYT2n8mo"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-screen-2xl w-full mx-auto px-8 pb-8 flex gap-8 overflow-hidden">
+<!-- Experts Sidebar -->
+<aside class="hidden lg:flex flex-col w-80 bg-surface-container-low rounded-3xl p-6 soft-shadow overflow-y-auto shrink-0 border border-white/40 items-center justify-center">
+<h2 class="text-2xl font-headline text-on-surface-variant text-center font-semibold">Sidebar pour Mon Service</h2>
+</aside>
+<!-- Chat Interface -->
+<section class="flex-1 flex flex-col bg-white rounded-[2.5rem] soft-shadow overflow-hidden border border-white/60">
+<!-- Chat Header -->
+<div class="px-8 py-4 border-b border-surface-container flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Lumi" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATTs20y-L6UL92IMd4Yqw_hxp7wabiLnlwtkHTbXBWWzVVMO8DqRW7hZLy4vC2khxBpQaCcvU_zib0PSOoeZ8BntqsnOLbXzIaURofkYIcsNWhjxdXuoqbLz9s_nC-3F1wWTXrUt5KqeK1LKJtl8HHIiRnfHW0cbDY9G3XmpgahYQ9d8bSrw7Tlu70dicXuTgMwlUaB1cn0xFApvFzcq4NfaMx_msEZTtXaGVuR83XS_Sf26my-aP1_g2o2oftmeYt6WlZLQVIut4"/>
+</div>
+<div>
+<h2 class="font-headline font-semibold">Discussion Multi-Experts</h2>
+<p class="text-xs text-green-600 font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                        Lumi &amp; 2 experts prêts à vous répondre
+                    </p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Conversation Area -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8 bg-surface-container-lowest/30">
+<!-- User Message -->
+<div class="flex justify-end">
+<div class="max-w-[80%] bg-[#7D9A8F] text-white p-5 rounded-3xl rounded-tr-sm soft-shadow">
+<p class="font-body text-sm leading-relaxed">
+                        Bonjour, je souhaite créer une SAS pour mon projet de vente en ligne. Quels sont les points de vigilance majeurs concernant la TVA et la protection de ma marque ?
+                    </p>
+</div>
+</div>
+<!-- Expert Response -->
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 shrink-0 border border-blue-100">
+<span class="material-symbols-outlined text-sm" data-icon="balance">balance</span>
+</div>
+<div class="space-y-4 max-w-[85%]">
+<div class="bg-white p-6 rounded-3xl rounded-tl-sm soft-shadow border border-surface-container-high">
+<div class="flex items-center gap-2 mb-3">
+<span class="font-headline font-bold text-sm text-blue-600">Expert Avocat</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Instantané</span>
+</div>
+<p class="font-body text-sm text-on-surface leading-relaxed space-y-4">
+                            Pour la protection de votre marque, il est crucial d'effectuer une recherche d'antériorité auprès de l'INPI avant tout dépôt. Concernant la structure SAS, elle offre une grande liberté statutaire, ce qui est idéal pour accueillir de futurs investisseurs.
+                        </p>
+<hr class="my-4 border-surface-container"/>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[12px]" data-icon="calculate">calculate</span>
+</div>
+<p class="text-xs italic text-on-surface-variant">L'expert Comptable prépare une analyse sur la TVA intracommunautaire...</p>
+</div>
+</div>
+<!-- Smart Action Buttons -->
+<div class="flex flex-wrap gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+<button class="bg-[#C77B6D] text-white px-5 py-3 rounded-full font-headline text-xs font-semibold flex items-center gap-2 hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="auto_videocam">auto_videocam</span>
+                            🪄 Générer une vidéo pédagogique
+                        </button>
+<button class="bg-[#ffdea5] text-[#765710] px-5 py-3 rounded-full font-headline text-xs font-semibold flex items-center gap-2 hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span>
+                            📝 Créer une fiche de synthèse
+                        </button>
+<button class="bg-surface-container-high text-on-surface px-5 py-3 rounded-full font-headline text-xs font-semibold flex items-center gap-2 hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+                            Modifier les statuts
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-8 pt-0">
+<div class="bg-surface-container-low rounded-[2rem] p-2 flex items-center gap-2 border border-white/40 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<button class="p-3 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm font-body py-4 px-2" placeholder="Posez votre question à vos experts sélectionnés..." type="text"/>
+<button class="p-3 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+</button>
+<button class="w-12 h-12 rounded-2xl bg-primary text-on-primary flex items-center justify-center hover:shadow-lg transition-all active:scale-90">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+<p class="text-[10px] text-center text-on-surface-variant mt-3 uppercase tracking-tighter opacity-60">
+                Propulsé par Lumi Orchestrator • Réponses générées par IA experte
+            </p>
+</div>
+</section>
+</main>
+<!-- Lumi Mobile Trigger (Hidden on Desktop Sidebar view but kept for consistency) -->
+<div class="fixed bottom-8 right-8 z-[100] lg:hidden">
+<button class="w-16 h-16 rounded-full bg-white p-1 shadow-2xl hover:scale-105 transition-transform active:scale-90 relative">
+<img alt="Lumi" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATTs20y-L6UL92IMd4Yqw_hxp7wabiLnlwtkHTbXBWWzVVMO8DqRW7hZLy4vC2khxBpQaCcvU_zib0PSOoeZ8BntqsnOLbXzIaURofkYIcsNWhjxdXuoqbLz9s_nC-3F1wWTXrUt5KqeK1LKJtl8HHIiRnfHW0cbDY9G3XmpgahYQ9d8bSrw7Tlu70dicXuTgMwlUaB1cn0xFApvFzcq4NfaMx_msEZTtXaGVuR83XS_Sf26my-aP1_g2o2oftmeYt6WlZLQVIut4"/>
+<div class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+</button>
+</div>
+<!-- Mobile Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#fdf9f5]/80 backdrop-blur-xl border-t border-[#d8c1bd]/15 shadow-[0_-12px_24px_-4px_rgba(28,27,26,0.05)] rounded-t-[2rem]">
+<a class="flex flex-col items-center justify-center text-[#ABA8A5] px-5 py-2 hover:text-[#C77B6D] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home_repair_service">home_repair_service</span>
+<span class="font-['Public_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">Services</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#ffdea5] text-[#8b4a3e] rounded-2xl px-5 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['Public_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ABA8A5] px-5 py-2 hover:text-[#C77B6D] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Public_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">Profil</span>
+</a>
+</nav>
+<!-- Desktop spacing fix for sidebar -->
+<div class="h-8 md:hidden"></div>
+</body></html>

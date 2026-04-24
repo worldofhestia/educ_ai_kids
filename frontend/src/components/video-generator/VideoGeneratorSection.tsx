@@ -4,8 +4,14 @@ import { useVideoGeneration } from '@/hooks/useVideoGeneration';
 import { GeneratorForm } from './GeneratorForm';
 import { ProgressDisplay } from './ProgressDisplay';
 import { VideoPlayer } from './VideoPlayer';
+import { Icon } from '@/components/layout/Icon';
 
-export function VideoGeneratorSection() {
+interface VideoGeneratorSectionProps {
+  /** Prompt pré-rempli (ex. depuis le chatbot Hestia via ?prompt=…) */
+  initialPrompt?: string;
+}
+
+export function VideoGeneratorSection({ initialPrompt }: VideoGeneratorSectionProps) {
   const {
     isLoading,
     status,
@@ -31,36 +37,23 @@ export function VideoGeneratorSection() {
   const showVideo = status === 'completed' && videoUrl;
 
   return (
-    <section className="flex flex-col items-center justify-center">
-      {/* Indicateur de statut */}
-      {status && status !== 'failed' && (
-        <div className="flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-secondary/50">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              status === 'completed'
-                ? 'bg-green-500'
-                : 'bg-yellow-500 animate-pulse'
-            }`}
-          />
-          <span className="text-sm font-medium">
-            {status === 'completed' ? 'Terminé' : 'En cours...'}
-          </span>
-        </div>
-      )}
-
+    <section className="w-full flex flex-col items-center gap-6">
       {/* Message d'erreur visible au-dessus du formulaire */}
       {status === 'failed' && errorMessage && (
-        <div className="w-full max-w-2xl mb-6 p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center">
+        <div className="w-full max-w-3xl p-4 rounded-2xl bg-[color:var(--destructive)]/10 border border-[color:var(--destructive)]/30 text-[color:var(--destructive)] text-sm text-center flex items-center justify-center gap-2">
+          <Icon name="error" filled size={18} />
           {errorMessage}
         </div>
       )}
 
-      {/* Formulaire de génération */}
       {showForm && (
-        <GeneratorForm onSubmit={handleSubmit} isLoading={isLoading} />
+        <GeneratorForm
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
+          initialPrompt={initialPrompt}
+        />
       )}
 
-      {/* Affichage de la progression */}
       {showProgress && (
         <ProgressDisplay
           status={status}
@@ -70,7 +63,6 @@ export function VideoGeneratorSection() {
         />
       )}
 
-      {/* Lecteur vidéo */}
       {showVideo && (
         <VideoPlayer
           videoUrl={videoUrl}
@@ -79,16 +71,15 @@ export function VideoGeneratorSection() {
         />
       )}
 
-      {/* Bouton réessayer en cas d'erreur */}
       {status === 'failed' && (
-        <div className="mt-4 text-center">
-          <button
-            onClick={reset}
-            className="text-primary hover:underline font-medium"
-          >
-            ← Réessayer avec une nouvelle demande
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={reset}
+          className="text-primary hover:underline font-headline font-medium inline-flex items-center gap-1"
+        >
+          <Icon name="arrow_back" size={16} />
+          Réessayer avec une nouvelle demande
+        </button>
       )}
     </section>
   );

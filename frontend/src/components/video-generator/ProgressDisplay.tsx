@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Progress } from '@/components/ui/progress';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Icon } from '@/components/layout/Icon';
 import { GenerationStatus } from '@/lib/api';
+import { cn } from '@/lib/utils';
 
 interface ProgressDisplayProps {
   status: GenerationStatus;
@@ -12,23 +12,26 @@ interface ProgressDisplayProps {
   errorMessage?: string | null;
 }
 
-const STATUS_INFO: Record<
-  GenerationStatus,
-  { emoji: string; label: string; color: string }
-> = {
-  pending: { emoji: '⏳', label: 'En attente', color: 'text-yellow-500' },
-  generating_script: { emoji: '📝', label: 'Écriture du script', color: 'text-blue-500' },
-  generating_narration: { emoji: '🎬', label: 'Création des scènes', color: 'text-purple-500' },
-  generating_images: { emoji: '🎨', label: 'Génération des images', color: 'text-pink-500' },
-  generating_voice: { emoji: '🎙️', label: 'Enregistrement voix off', color: 'text-orange-500' },
-  generating_music: { emoji: '🎵', label: 'Composition musicale', color: 'text-cyan-500' },
-  generating_video_clips: { emoji: '🎥', label: 'Animation des scènes', color: 'text-indigo-500' },
-  assembling: { emoji: '🔧', label: 'Montage final', color: 'text-green-500' },
-  completed: { emoji: '✅', label: 'Terminé !', color: 'text-green-600' },
-  failed: { emoji: '❌', label: 'Erreur', color: 'text-red-500' },
+interface StatusConfig {
+  icon: string;
+  label: string;
+  accent: 'primary' | 'sage' | 'gold' | 'success' | 'error';
+}
+
+const STATUS_INFO: Record<GenerationStatus, StatusConfig> = {
+  pending: { icon: 'hourglass_top', label: 'En attente', accent: 'gold' },
+  generating_script: { icon: 'description', label: 'Script narratif', accent: 'primary' },
+  generating_narration: { icon: 'view_agenda', label: 'Découpage des scènes', accent: 'primary' },
+  generating_images: { icon: 'palette', label: 'Illustrations cartoon', accent: 'gold' },
+  generating_voice: { icon: 'mic', label: 'Voix off', accent: 'primary' },
+  generating_music: { icon: 'music_note', label: 'Musique de fond', accent: 'sage' },
+  generating_video_clips: { icon: 'movie', label: 'Animation des scènes', accent: 'primary' },
+  assembling: { icon: 'auto_fix_high', label: 'Montage final', accent: 'sage' },
+  completed: { icon: 'check_circle', label: 'Terminé !', accent: 'success' },
+  failed: { icon: 'error', label: 'Erreur', accent: 'error' },
 };
 
-const WORKFLOW_STEPS = [
+const WORKFLOW_STEPS: GenerationStatus[] = [
   'generating_script',
   'generating_narration',
   'generating_images',
@@ -39,6 +42,14 @@ const WORKFLOW_STEPS = [
   'completed',
 ];
 
+const ACCENT_CLASSES = {
+  primary: 'bg-primary text-primary-foreground',
+  sage: 'bg-[color:var(--color-hestia-sage-dark)] text-white',
+  gold: 'bg-[color:var(--color-hestia-gold-soft)] text-[color:var(--color-hestia-gold-on)]',
+  success: 'bg-green-600 text-white',
+  error: 'bg-[color:var(--destructive)] text-white',
+} as const;
+
 export function ProgressDisplay({
   status,
   progress,
@@ -46,115 +57,149 @@ export function ProgressDisplay({
   errorMessage,
 }: ProgressDisplayProps) {
   const [animatedProgress, setAnimatedProgress] = useState(0);
-  const statusInfo = STATUS_INFO[status] || STATUS_INFO.pending;
+  const statusInfo = STATUS_INFO[status] ?? STATUS_INFO.pending;
 
-  // Animation fluide de la progression
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setAnimatedProgress(progress);
-    }, 100);
+    const timer = setTimeout(() => setAnimatedProgress(progress), 100);
     return () => clearTimeout(timer);
   }, [progress]);
 
   const currentStepIndex = WORKFLOW_STEPS.indexOf(status);
 
   return (
-    <Card className="w-full max-w-2xl mx-auto border-2 shadow-xl overflow-hidden">
-      <CardHeader className="bg-gradient-to-r from-primary/10 to-secondary/10 pb-4">
-        <CardTitle className="text-center text-2xl flex items-center justify-center gap-3">
-          <span className={`text-4xl ${status === 'completed' ? 'animate-bounce' : 'animate-pulse'}`}>
-            {statusInfo.emoji}
-          </span>
-          <span className={statusInfo.color}>{statusInfo.label}</span>
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="space-y-6 p-6">
-        {/* Barre de progression principale */}
-        <div className="space-y-2">
-          <div className="flex justify-between items-center text-sm">
-            <span className="font-medium">Progression globale</span>
-            <span className="font-mono font-bold text-primary">
-              {Math.round(animatedProgress)}%
-            </span>
-          </div>
-          <Progress 
-            value={animatedProgress} 
-            className="h-4 transition-all duration-500"
+    <article className="w-full max-w-3xl mx-auto bg-card rounded-[2rem] md:rounded-[2.5rem] editorial-shadow-lg overflow-hidden border border-[color:var(--color-outline-variant)]/30">
+      {/* Header */}
+      <header className="px-6 md:px-10 pt-8 pb-6 bg-[color:var(--color-surface-container-low)] flex items-center gap-4">
+        <div
+          className={cn(
+            'w-14 h-14 rounded-2xl flex items-center justify-center editorial-shadow',
+            ACCENT_CLASSES[statusInfo.accent]
+          )}
+        >
+          <Icon
+            name={statusInfo.icon}
+            filled
+            size={26}
+            className={status !== 'completed' && status !== 'failed' ? 'animate-pulse' : ''}
           />
         </div>
+        <div className="flex-1 min-w-0">
+          <h2 className="font-headline text-2xl md:text-3xl font-semibold tracking-tight">
+            {statusInfo.label}
+          </h2>
+          <p className="text-sm text-[color:var(--color-on-surface-variant)] truncate">
+            {currentStep || 'Initialisation…'}
+          </p>
+        </div>
+        <div className="hidden sm:block text-right">
+          <p className="font-headline font-bold text-3xl text-primary">
+            {Math.round(animatedProgress)}
+            <span className="text-base">%</span>
+          </p>
+        </div>
+      </header>
 
-        {/* Étape actuelle */}
-        <div className="bg-secondary/30 rounded-lg p-4 text-center">
-          <p className="text-sm text-muted-foreground mb-1">Étape en cours</p>
-          <p className="font-medium text-lg">{currentStep}</p>
+      <div className="p-6 md:p-10 space-y-8">
+        {/* Barre de progression */}
+        <div className="space-y-2">
+          <div className="h-3 rounded-full overflow-hidden bg-[color:var(--color-surface-container-high)]">
+            <div
+              data-slot="progress-indicator"
+              className="h-full rounded-full transition-all duration-500 ease-out"
+              style={{ width: `${animatedProgress}%` }}
+              aria-valuenow={animatedProgress}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              role="progressbar"
+            />
+          </div>
+          <div className="flex justify-between text-[11px] font-body uppercase tracking-widest text-[color:var(--color-on-surface-variant)]">
+            <span>Démarrage</span>
+            <span>En cours</span>
+            <span>Terminé</span>
+          </div>
         </div>
 
-        {/* Timeline des étapes */}
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-muted-foreground">Étapes du processus</p>
-          <div className="flex justify-between items-center gap-1">
+        {/* Timeline étapes */}
+        <div className="space-y-4">
+          <h3 className="font-headline font-semibold text-sm uppercase tracking-widest text-[color:var(--color-on-surface-variant)] flex items-center gap-2">
+            <span className="w-1 h-4 rounded-full bg-primary" />
+            Étapes du processus
+          </h3>
+
+          <ol className="relative space-y-3">
             {WORKFLOW_STEPS.slice(0, -1).map((step, index) => {
-              const stepInfo = STATUS_INFO[step as GenerationStatus];
+              const stepInfo = STATUS_INFO[step];
               const isCompleted = index < currentStepIndex;
               const isCurrent = step === status;
               const isPending = index > currentStepIndex;
 
               return (
-                <div
+                <li
                   key={step}
-                  className={`flex-1 flex flex-col items-center gap-1 ${
-                    isPending ? 'opacity-40' : ''
-                  }`}
+                  className={cn(
+                    'flex items-center gap-4 p-3 rounded-2xl transition-all',
+                    isCurrent && 'bg-[color:var(--color-surface-container-low)] editorial-shadow',
+                    isPending && 'opacity-40'
+                  )}
                 >
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-lg transition-all duration-300 ${
-                      isCompleted
-                        ? 'bg-green-500 text-white'
-                        : isCurrent
-                        ? 'bg-primary text-primary-foreground animate-pulse ring-4 ring-primary/30'
-                        : 'bg-secondary'
-                    }`}
+                    className={cn(
+                      'w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0',
+                      isCompleted && 'bg-green-600 text-white',
+                      isCurrent &&
+                        'bg-hestia-gradient text-primary-foreground animate-pulse ring-4 ring-primary/20',
+                      isPending && 'bg-[color:var(--color-surface-container-high)] text-[color:var(--color-on-surface-variant)]'
+                    )}
                   >
-                    {isCompleted ? '✓' : stepInfo.emoji}
+                    <Icon
+                      name={isCompleted ? 'check' : stepInfo.icon}
+                      filled={isCurrent || isCompleted}
+                      size={20}
+                    />
                   </div>
-                  <span className="text-[10px] text-center leading-tight hidden md:block">
-                    {stepInfo.label.split(' ')[0]}
+                  <span
+                    className={cn(
+                      'font-body text-sm',
+                      isCurrent && 'font-semibold'
+                    )}
+                  >
+                    {stepInfo.label}
                   </span>
-                </div>
+                  {isCurrent && (
+                    <span className="ml-auto flex gap-1">
+                      {[0, 1, 2].map((i) => (
+                        <span
+                          key={i}
+                          className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce"
+                          style={{ animationDelay: `${i * 0.15}s` }}
+                        />
+                      ))}
+                    </span>
+                  )}
+                </li>
               );
             })}
-          </div>
+          </ol>
         </div>
 
-        {/* Message d'erreur */}
+        {/* Erreur */}
         {status === 'failed' && errorMessage && (
-          <div className="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <p className="text-red-600 dark:text-red-400 text-sm font-medium">
-              ⚠️ {errorMessage}
-            </p>
-            <p className="text-red-500 dark:text-red-500 text-xs mt-2">
-              Veuillez réessayer ou modifier votre demande.
-            </p>
-          </div>
-        )}
-
-        {/* Indicateur de chargement animé */}
-        {status !== 'completed' && status !== 'failed' && (
-          <div className="flex justify-center">
-            <div className="flex gap-1">
-              {[0, 1, 2].map((i) => (
-                <div
-                  key={i}
-                  className="w-2 h-2 rounded-full bg-primary animate-bounce"
-                  style={{ animationDelay: `${i * 0.15}s` }}
-                />
-              ))}
+          <div className="bg-[color:var(--destructive)]/10 border border-[color:var(--destructive)]/30 rounded-2xl p-5">
+            <div className="flex items-start gap-3">
+              <Icon name="error" className="text-[color:var(--destructive)]" filled />
+              <div>
+                <p className="font-headline font-semibold text-[color:var(--destructive)] text-sm">
+                  {errorMessage}
+                </p>
+                <p className="text-xs mt-1 text-[color:var(--color-on-surface-variant)]">
+                  Veuillez réessayer ou modifier votre demande.
+                </p>
+              </div>
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   );
 }
-

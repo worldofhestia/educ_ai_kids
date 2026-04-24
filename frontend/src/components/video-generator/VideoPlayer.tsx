@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Icon } from '@/components/layout/Icon';
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -12,16 +11,12 @@ interface VideoPlayerProps {
 
 export function VideoPlayer({ videoUrl, title, onNewVideo }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showControls, setShowControls] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
+      if (isPlaying) videoRef.current.pause();
+      else videoRef.current.play();
       setIsPlaying(!isPlaying);
     }
   };
@@ -44,39 +39,45 @@ export function VideoPlayer({ videoUrl, title, onNewVideo }: VideoPlayerProps) {
           url: window.location.href,
         });
       } catch {
-        console.log('Partage annulé');
+        /* Partage annulé par l'utilisateur */
       }
     } else {
-      // Fallback: copier le lien
       await navigator.clipboard.writeText(window.location.href);
       alert('Lien copié !');
     }
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto border-2 shadow-2xl overflow-hidden">
-      <CardHeader className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 text-center pb-4">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <span className="text-4xl">🎉</span>
-          <CardTitle className="text-2xl font-bold text-green-600">
-            Votre vidéo est prête !
-          </CardTitle>
-          <span className="text-4xl">🎉</span>
-        </div>
-        {title && (
-          <CardDescription className="text-lg font-medium">
-            {title}
-          </CardDescription>
-        )}
-      </CardHeader>
-
-      <CardContent className="space-y-6 p-6">
-        {/* Lecteur vidéo */}
+    <article className="w-full max-w-4xl mx-auto bg-card rounded-[2rem] md:rounded-[2.5rem] editorial-shadow-lg overflow-hidden border border-[color:var(--color-outline-variant)]/30">
+      {/* Header célébration */}
+      <header className="px-6 md:px-10 pt-8 md:pt-10 pb-6 bg-gradient-to-br from-[color:var(--color-hestia-gold-soft)]/60 via-[color:var(--color-surface-container-low)] to-card relative overflow-hidden">
         <div
-          className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-inner group"
-          onMouseEnter={() => setShowControls(true)}
-          onMouseLeave={() => setShowControls(isPlaying ? false : true)}
-        >
+          aria-hidden="true"
+          className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl"
+        />
+        <div className="relative flex items-start gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-hestia-gradient text-primary-foreground flex items-center justify-center editorial-shadow">
+            <Icon name="celebration" filled size={28} />
+          </div>
+          <div className="flex-1">
+            <span className="inline-block text-xs font-body uppercase tracking-widest font-bold text-primary mb-1">
+              Génération terminée
+            </span>
+            <h2 className="font-headline text-2xl md:text-3xl font-semibold tracking-tight leading-tight">
+              Votre vidéo est prête !
+            </h2>
+            {title && (
+              <p className="text-sm md:text-base text-[color:var(--color-on-surface-variant)] mt-1 italic">
+                « {title} »
+              </p>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Lecteur */}
+      <div className="p-6 md:p-10 space-y-8">
+        <div className="relative aspect-video bg-black rounded-[1.5rem] overflow-hidden editorial-shadow group">
           <video
             ref={videoRef}
             src={videoUrl}
@@ -86,79 +87,77 @@ export function VideoPlayer({ videoUrl, title, onNewVideo }: VideoPlayerProps) {
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}
-            poster="/video-poster.png"
           >
             Votre navigateur ne supporte pas la lecture vidéo.
           </video>
 
-          {/* Overlay de lecture personnalisé (optionnel) */}
-          {!isPlaying && showControls && (
+          {!isPlaying && (
             <button
+              type="button"
               onClick={handlePlayPause}
               className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Lecture"
             >
-              <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform">
-                <span className="text-4xl ml-1">▶️</span>
+              <div className="w-20 h-20 rounded-full bg-card/95 flex items-center justify-center editorial-shadow-lg">
+                <Icon name="play_arrow" filled className="text-primary" size={42} />
               </div>
             </button>
           )}
         </div>
 
-        {/* Boutons d'action */}
-        <div className="flex flex-wrap gap-3 justify-center">
-          <Button
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            type="button"
             onClick={handleDownload}
-            variant="default"
-            size="lg"
-            className="flex-1 min-w-[200px] max-w-xs py-6 text-lg font-semibold bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
+            className="flex-1 bg-hestia-gradient text-primary-foreground py-4 rounded-full font-headline font-bold text-base inline-flex items-center justify-center gap-2 hover:shadow-xl transition-all active:scale-[0.98] editorial-shadow"
           >
-            <span className="mr-2">📥</span>
+            <Icon name="download" size={20} />
             Télécharger
-          </Button>
+          </button>
 
-          <Button
+          <button
+            type="button"
             onClick={handleShare}
-            variant="outline"
-            size="lg"
-            className="flex-1 min-w-[200px] max-w-xs py-6 text-lg font-semibold"
+            className="flex-1 bg-[color:var(--color-hestia-gold-soft)] text-[color:var(--color-hestia-gold-on)] py-4 rounded-full font-headline font-bold text-base inline-flex items-center justify-center gap-2 hover:shadow-md transition-all active:scale-[0.98]"
           >
-            <span className="mr-2">📤</span>
+            <Icon name="share" size={20} />
             Partager
-          </Button>
+          </button>
 
-          <Button
+          <button
+            type="button"
             onClick={onNewVideo}
-            variant="secondary"
-            size="lg"
-            className="flex-1 min-w-[200px] max-w-xs py-6 text-lg font-semibold"
+            className="flex-1 bg-[color:var(--color-surface-container-high)] text-foreground py-4 rounded-full font-headline font-bold text-base inline-flex items-center justify-center gap-2 hover:bg-[color:var(--color-surface-variant)] transition-all active:scale-[0.98]"
           >
-            <span className="mr-2">✨</span>
-            Nouvelle Vidéo
-          </Button>
+            <Icon name="add_circle" size={20} />
+            Nouvelle vidéo
+          </button>
         </div>
 
-        {/* Statistiques / Infos */}
-        <div className="grid grid-cols-3 gap-4 pt-4 border-t">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-primary">HD</p>
-            <p className="text-xs text-muted-foreground">Qualité</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-primary">MP4</p>
-            <p className="text-xs text-muted-foreground">Format</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-primary">∞</p>
-            <p className="text-xs text-muted-foreground">Utilisation</p>
-          </div>
+        {/* Stats tonales */}
+        <div className="grid grid-cols-3 gap-3 pt-2">
+          <StatCard icon="hd" label="Qualité" value="HD" />
+          <StatCard icon="video_file" label="Format" value="MP4" />
+          <StatCard icon="all_inclusive" label="Usage" value="Libre" />
         </div>
 
-        {/* Note de copyright */}
-        <p className="text-xs text-center text-muted-foreground">
-          Cette vidéo a été générée par IA. Vous pouvez l'utiliser librement à des fins éducatives.
+        <p className="text-xs text-center text-[color:var(--color-on-surface-variant)] font-body uppercase tracking-widest">
+          Générée par IA • Utilisable librement à des fins pédagogiques
         </p>
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   );
 }
 
+function StatCard({ icon, label, value }: { icon: string; label: string; value: string }) {
+  return (
+    <div className="bg-[color:var(--color-surface-container-low)] rounded-2xl p-4 text-center">
+      <Icon name={icon} className="text-primary mb-1" size={22} />
+      <p className="font-headline font-bold text-xl text-foreground">{value}</p>
+      <p className="text-[10px] text-[color:var(--color-on-surface-variant)] uppercase tracking-widest font-body">
+        {label}
+      </p>
+    </div>
+  );
+}

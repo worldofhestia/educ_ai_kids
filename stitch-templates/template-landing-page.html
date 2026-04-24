@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>World of Hestia - Découvrir</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#afcdc1",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#ddd9d6",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#1c1b1a",
+                        "inverse-primary": "#ffb4a6",
+                        "primary-fixed-dim": "#ffb4a6",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "on-secondary-container": "#4d685e",
+                        "tertiary-container": "#916f28",
+                        "primary-fixed": "#ffdad4",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#314c43",
+                        "tertiary-fixed-dim": "#ebc071",
+                        "primary": "#8b4a3e",
+                        "tertiary": "#765710",
+                        "surface-variant": "#e6e2de",
+                        "surface-container": "#f1edea",
+                        "outline-variant": "#d8c1bd",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#534340",
+                        "on-surface": "#1c1b1a",
+                        "on-primary-container": "#fffbff",
+                        "on-primary-fixed": "#390b05",
+                        "secondary-fixed": "#cbe9dd",
+                        "primary-container": "#a86154",
+                        "on-secondary-fixed": "#042019",
+                        "surface-container-high": "#ebe7e4",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-tint": "#8e4c40",
+                        "surface-container-highest": "#e6e2de",
+                        "surface": "#fdf9f5",
+                        "secondary": "#48645a",
+                        "inverse-on-surface": "#f4f0ec",
+                        "on-tertiary-container": "#fffbff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#31302e",
+                        "on-primary-fixed-variant": "#71352a",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fdf9f5",
+                        "secondary-container": "#c8e6da",
+                        "background": "#fdf9f5",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f7f3ef",
+                        "outline": "#86736f",
+                        "tertiary-fixed": "#ffdea5",
+                        "hestia-cream": "#F5F0E5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "2rem",
+                        "4xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Lexend"],
+                        "body": ["Public Sans"],
+                        "label": ["Public Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0 12px 24px -4px rgba(28, 27, 26, 0.05);
+        }
+        .drawer-shadow {
+            box-shadow: 0 -12px 32px -4px rgba(28, 27, 26, 0.08);
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            background-color: rgba(253, 249, 245, 0.8);
+        }
+        .organic-shape {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+        .chat-window {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .chat-window.hidden {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+        }
+        .chat-window.expanded {
+            position: fixed !important;
+            top: 80px !important;
+            left: auto !important;
+            right: 2rem !important;
+            bottom: 112px !important;
+            width: 65% !important;
+            height: calc(100vh - 80px - 112px) !important;
+            max-width: 100% !important;
+            border-radius: 2.5rem !important;
+            transform: none !important;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-tertiary-fixed selection:text-on-tertiary-fixed relative">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-[#fdf9f5] dark:bg-stone-950" id="topAppBar">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-headline font-semibold tracking-tighter text-[#C77B6D] dark:text-[#d4968a]">Mon Service</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#7D9A8F] dark:text-[#9bb3ab] font-bold border-b-2 border-[#7D9A8F] pb-1 font-headline" href="#">Découvrir</a>
+<a class="text-[#ABA8A5] dark:text-stone-500 font-medium hover:text-[#C77B6D] transition-colors font-headline" href="#">Utiliser</a>
+</nav>
+<div class="flex items-center gap-6">
+<div class="hidden sm:flex items-center gap-2 bg-tertiary-fixed px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="payments">payments</span>
+<span class="text-on-tertiary-fixed font-headline font-bold text-sm">250</span>
+</div>
+<div class="flex items-center gap-3 relative">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all" onclick="document.getElementById('profileSidebar').classList.toggle('hidden')">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGABvfRnOHt-23ph-QdBhhpOkUKeHunNMCq0F-I1AIkvSTJXXtl6aGlJRvDv935xFTIPOHEVsSrkmWUO4j2-pPbUtqeRyMiKgv5T-At1990fJjJvnuv6YQS_2T48cHvF4FMCoKNGcMXC42Rl9h4X4Sdiq47h_LQrTTv4YUCZ_h29IRPkJRzAVvOrzCOxSkfq2Y6-jHDooigQ7cWWizZPsOftX3uUedzW55-blIxdO56Ul7C_yRBIOIAgk448rm33r-SN3fYT2n8mo"/>
+</div>
+<!-- Profile Sidebar -->
+<div class="hidden absolute top-14 right-0 w-80 bg-surface rounded-3xl editorial-shadow z-50 border border-outline-variant/10 overflow-hidden" id="profileSidebar">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGABvfRnOHt-23ph-QdBhhpOkUKeHunNMCq0F-I1AIkvSTJXXtl6aGlJRvDv935xFTIPOHEVsSrkmWUO4j2-pPbUtqeRyMiKgv5T-At1990fJjJvnuv6YQS_2T48cHvF4FMCoKNGcMXC42Rl9h4X4Sdiq47h_LQrTTv4YUCZ_h29IRPkJRzAVvOrzCOxSkfq2Y6-jHDooigQ7cWWizZPsOftX3uUedzW55-blIxdO56Ul7C_yRBIOIAgk448rm33r-SN3fYT2n8mo"/>
+</div>
+<div>
+<h4 class="font-headline font-semibold text-on-surface">Alexandre</h4>
+<p class="text-xs text-on-surface-variant font-label">Membre Premium</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-variant" title="Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="p-6">
+<h5 class="font-headline font-medium text-sm text-on-surface-variant mb-6 uppercase tracking-widest text-center">Écosystème Hestia</h5>
+<div class="grid grid-cols-4 gap-4">
+<div class="flex flex-col items-center gap-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">movie</span>
+</div>
+<span class="text-[10px] font-label font-medium text-center text-on-surface">Video</span>
+</div>
+<div class="flex flex-col items-center gap-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+<span class="material-symbols-outlined text-secondary">restaurant</span>
+</div>
+<span class="text-[10px] font-label font-medium text-center text-on-surface">Nutrition</span>
+</div>
+<div class="flex flex-col items-center gap-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-2xl bg-tertiary/10 flex items-center justify-center group-hover:bg-tertiary/20 transition-colors">
+<span class="material-symbols-outlined text-tertiary">auto_stories</span>
+</div>
+<span class="text-[10px] font-label font-medium text-center text-on-surface">Stories</span>
+</div>
+<div class="flex flex-col items-center gap-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-2xl bg-[#a86154]/10 flex items-center justify-center group-hover:bg-[#a86154]/20 transition-colors">
+<span class="material-symbols-outlined text-[#a86154]">flight</span>
+</div>
+<span class="text-[10px] font-label font-medium text-center text-on-surface">Voyage</span>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant/10 bg-surface-container-low text-center">
+<button class="text-error font-headline font-semibold text-sm hover:underline">Déconnexion</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-screen-2xl mx-auto px-8 py-12 space-y-32">
+<section class="flex flex-col items-center justify-center min-h-[50vh]">
+<h1 class="font-headline text-5xl md:text-7xl font-bold text-center text-on-surface">
+        Landing page de Mon Service
+    </h1>
+</section>
+<!-- Ecosystem Power Section -->
+<section class="bg-surface-container rounded-[4rem] p-16 relative overflow-hidden">
+<div class="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<h2 class="font-headline text-4xl font-semibold tracking-tight">La puissance de l'écosystème</h2>
+<p class="text-lg text-on-surface-variant leading-relaxed">
+                    Ne vous contentez pas de réponses. Notre IA orchestre une chaîne de valeur complète : transformez un conseil juridique en contrat signé, ou une idée marketing en vidéo publicitaire en un clic.
+                </p>
+<div class="space-y-6">
+<!-- Step 1 -->
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm">1</div>
+<div>
+<h4 class="font-headline font-semibold text-lg mb-1">Interrogation</h4>
+<p class="text-on-surface-variant text-sm">Posez votre question à un expert ou lancez une table ronde.</p>
+</div>
+</div>
+<!-- Connector -->
+<div class="ml-4 h-8 border-l-2 border-dotted border-outline-variant"></div>
+<!-- Step 2 -->
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm">2</div>
+<div>
+<h4 class="font-headline font-semibold text-lg mb-1">Matérialisation</h4>
+<p class="text-on-surface-variant text-sm">Générez instantanément les documents, visuels ou codes nécessaires.</p>
+</div>
+</div>
+<!-- Connector -->
+<div class="ml-4 h-8 border-l-2 border-dotted border-outline-variant"></div>
+<!-- Step 3 -->
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm">3</div>
+<div>
+<h4 class="font-headline font-semibold text-lg mb-1">Action</h4>
+<p class="text-on-surface-variant text-sm">Diffusez, signez ou déployez vos ressources sur vos plateformes.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative bg-surface-container-highest rounded-4xl p-8 editorial-shadow min-h-[400px] flex items-center justify-center">
+<!-- Visual representation of flow -->
+<div class="grid grid-cols-2 gap-4 w-full">
+<div class="bg-surface p-6 rounded-3xl shadow-sm space-y-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<div class="h-2 w-3/4 bg-surface-variant rounded-full"></div>
+<div class="h-2 w-1/2 bg-surface-variant rounded-full"></div>
+</div>
+<div class="bg-surface p-6 rounded-3xl shadow-sm space-y-3 translate-y-8">
+<span class="material-symbols-outlined text-secondary">movie</span>
+<div class="aspect-video bg-surface-variant rounded-xl"></div>
+</div>
+<div class="bg-surface p-6 rounded-3xl shadow-sm space-y-3 -translate-y-4">
+<span class="material-symbols-outlined text-tertiary">draw</span>
+<div class="h-16 w-16 mx-auto bg-surface-variant rounded-full"></div>
+</div>
+<div class="bg-primary text-on-primary p-6 rounded-3xl shadow-lg space-y-3 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-3xl">rocket_launch</span>
+<span class="text-xs font-bold uppercase tracking-widest">Prêt à agir</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Background Organic Shape -->
+<div class="absolute -top-20 -right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-secondary/5 rounded-full blur-3xl"></div>
+</section>
+<!-- Final CTA -->
+<section class="text-center py-12 space-y-10">
+<h2 class="font-headline text-5xl font-semibold tracking-tight max-w-3xl mx-auto leading-tight">
+            Donnez une nouvelle dimension à vos idées.
+        </h2>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+<button class="bg-primary text-on-primary px-12 py-6 rounded-full font-headline font-bold text-lg hover:shadow-xl hover:-translate-y-1 transition-all active:scale-95 editorial-shadow">
+                Commencer maintenant
+            </button>
+<button class="text-primary font-headline font-bold text-lg px-8 py-6 hover:bg-primary/5 rounded-full transition-all flex items-center gap-2">
+                Consulter les tarifs <span class="material-symbols-outlined">arrow_outward</span>
+</button>
+</div>
+<p class="text-on-surface-variant font-label text-sm uppercase tracking-widest">Sans engagement. 10 crédits offerts à l'inscription.</p>
+</section>
+</main>
+<!-- Floating Orchestrator Chatbot -->
+<div class="fixed bottom-8 right-8 z-[150] flex flex-col items-end gap-4">
+<!-- Chat Window -->
+<div class="chat-window hidden w-80 sm:w-96 h-[500px] bg-hestia-cream rounded-[2.5rem] flex flex-col shadow-2xl border border-outline-variant/20 overflow-hidden" id="lumiChatWindow">
+<!-- Header -->
+<div class="px-8 py-4 bg-surface-container-high border-b border-outline-variant/10 flex items-center justify-between shrink-0">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border-2 border-primary p-0.5 overflow-hidden">
+<img alt="Hestia" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP-bNxEa2BYxNnQPlodFPcAvfwV2H1mVv1_IMR4uV2ury29MD0EJMf2EFiniy2IqmEo6QRVWd-YQAtqnUclrhnwMgA9ZSk38UAlpBrCu-6Lvkvy7-AMaIeazCvV-qq9RYoxmMkoBuJXygk70OP-hIR1pCY_0XXkD6-s9FndGnfg30YGBIoTgtCnK90kT8L_fkkUS87c4gHT26THBJa2Z2oN7b_Aan9bg3JPVYAx_M3WB81H5UzM1XbMZju_2Z86aInyyKAckFz5gQ3"/>
+</div>
+<div>
+<h4 class="font-headline font-semibold text-on-surface leading-tight">Hestia</h4>
+<p class="text-xs text-secondary font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                    Hestia &amp; 2 experts prêts à vous répondre
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors text-on-surface-variant hidden md:flex" title="Recherche">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors text-on-surface-variant" onclick="toggleExpand()" title="Agrandir">
+<span class="material-symbols-outlined text-[20px]" id="expandIcon">open_in_full</span>
+</button>
+</div>
+</div>
+<div class="flex flex-1 overflow-hidden">
+<!-- Chat Interface -->
+<div class="flex-1 flex flex-col min-w-0 bg-surface/30">
+<!-- Conversation Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+<!-- User Message -->
+<div class="flex justify-end">
+<div class="max-w-[85%] md:max-w-[80%] bg-secondary text-on-secondary p-5 rounded-3xl rounded-tr-sm editorial-shadow">
+<p class="font-body text-sm leading-relaxed">
+                            Bonjour, je souhaite créer une SAS pour mon projet de vente en ligne. Quels sont les points de vigilance majeurs concernant la TVA et la protection de ma marque ?
+                        </p>
+</div>
+</div>
+<!-- Expert Response -->
+<div class="flex gap-4">
+<div class="hidden md:flex w-10 h-10 rounded-full bg-blue-50 items-center justify-center text-blue-500 shrink-0 border border-blue-100">
+<span class="material-symbols-outlined text-sm">balance</span>
+</div>
+<div class="space-y-4 max-w-[90%] md:max-w-[85%]">
+<div class="bg-white p-6 rounded-3xl rounded-tl-sm editorial-shadow border border-surface-container-high">
+<div class="flex items-center gap-2 mb-3">
+<div class="md:hidden w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 shrink-0 border border-blue-100">
+<span class="material-symbols-outlined text-[12px]">balance</span>
+</div>
+<span class="font-headline font-bold text-sm text-blue-600">Expert Avocat</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Instantané</span>
+</div>
+<p class="font-body text-sm text-on-surface leading-relaxed space-y-4">
+                                Pour la protection de votre marque, il est crucial d'effectuer une recherche d'antériorité auprès de l'INPI avant tout dépôt. Concernant la structure SAS, elle offre une grande liberté statutaire, ce qui est idéal pour accueillir de futurs investisseurs.
+                            </p>
+<hr class="my-4 border-surface-container"/>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[12px]">calculate</span>
+</div>
+<p class="text-xs italic text-on-surface-variant">L'expert Comptable prépare une analyse sur la TVA intracommunautaire...</p>
+</div>
+</div>
+<!-- Smart Action Buttons -->
+<div class="hidden [.expanded_&amp;]:flex flex-wrap gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+<button class="bg-primary text-on-primary px-5 py-3 rounded-full font-headline text-xs font-semibold flex items-center gap-2 hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm">auto_videocam</span>
+                                🪄 Générer une vidéo pédagogique
+                            </button>
+<button class="bg-tertiary-fixed text-on-tertiary-fixed px-5 py-3 rounded-full font-headline text-xs font-semibold flex items-center gap-2 hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm">description</span>
+                                📝 Créer une fiche de synthèse
+                            </button>
+<button class="bg-surface-container-high text-on-surface px-5 py-3 rounded-full font-headline text-xs font-semibold flex items-center gap-2 hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-sm">edit</span>
+                                Modifier les statuts
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-6 pt-0">
+<div class="bg-surface-container-low rounded-[2rem] p-2 flex items-center gap-2 border border-outline-variant/20 focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-sm">
+<button class="p-3 text-on-surface-variant hover:text-primary transition-colors hidden sm:block">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm font-body py-4 px-2" placeholder="Posez votre question à vos experts..." type="text"/>
+<button class="p-3 text-on-surface-variant hover:text-primary transition-colors hidden [.expanded_&amp;]:block">
+<span class="material-symbols-outlined">image</span>
+</button>
+<button class="w-12 h-12 rounded-2xl bg-primary text-on-primary flex items-center justify-center hover:shadow-lg transition-all active:scale-90">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<p class="hidden [.expanded_&amp;]:block text-[10px] text-center text-on-surface-variant mt-3 uppercase tracking-tighter opacity-60">
+                    Propulsé par Hestia Orchestrator • Réponses générées par IA experte
+                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Trigger Icon -->
+<button class="w-16 h-16 rounded-full bg-surface-container-lowest p-1 shadow-2xl hover:scale-105 transition-transform active:scale-90 relative editorial-shadow border border-outline-variant/10" id="lumiTrigger" onclick="toggleChat()">
+<img alt="Hestia" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP-bNxEa2BYxNnQPlodFPcAvfwV2H1mVv1_IMR4uV2ury29MD0EJMf2EFiniy2IqmEo6QRVWd-YQAtqnUclrhnwMgA9ZSk38UAlpBrCu-6Lvkvy7-AMaIeazCvV-qq9RYoxmMkoBuJXygk70OP-hIR1pCY_0XXkD6-s9FndGnfg30YGBIoTgtCnK90kT8L_fkkUS87c4gHT26THBJa2Z2oN7b_Aan9bg3JPVYAx_M3WB81H5UzM1XbMZju_2Z86aInyyKAckFz5gQ3"/>
+<div class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-surface rounded-full"></div>
+</button>
+</div>
+<!-- Mobile Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#fdf9f5]/80 dark:bg-stone-950/80 backdrop-blur-xl border-t border-[#d8c1bd]/15 shadow-[0_-12px_24px_-4px_rgba(28,27,26,0.05)] rounded-t-[2rem]">
+<a class="flex flex-col items-center justify-center text-[#7D9A8F] px-5 py-2" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Public_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">Découvrir</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ABA8A5] px-5 py-2 hover:text-[#C77B6D]" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-['Public_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">Questions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ABA8A5] px-5 py-2 hover:text-[#C77B6D]" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Public_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">Profil</span>
+</a>
+</nav>
+<div class="h-24 md:hidden"></div>
+<script>
+        function toggleChat() {
+            const chatWindow = document.getElementById('lumiChatWindow');
+            const trigger = document.getElementById('lumiTrigger');
+            
+            if (chatWindow.classList.contains('hidden')) {
+                chatWindow.classList.remove('hidden');
+            } else {
+                chatWindow.classList.add('hidden');
+                chatWindow.classList.remove('expanded');
+                document.getElementById('expandIcon').textContent = 'open_in_full';
+            }
+        }
+
+        function toggleExpand() {
+            const chatWindow = document.getElementById('lumiChatWindow');
+            const expandIcon = document.getElementById('expandIcon');
+            
+            chatWindow.classList.toggle('expanded');
+            
+            if (chatWindow.classList.contains('expanded')) {
+                expandIcon.textContent = 'close_fullscreen';
+            } else {
+                expandIcon.textContent = 'open_in_full';
+            }
+        }
+        
+        // Close profile sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('profileSidebar');
+            const avatar = sidebar ? sidebar.previousElementSibling : null;
+            if (sidebar && !sidebar.classList.contains('hidden')) {
+                if (!sidebar.contains(event.target) && !avatar.contains(event.target)) {
+                    sidebar.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body></html>
